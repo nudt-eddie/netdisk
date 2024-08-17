@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<h1>Login</h1>
+<form id="login-form" action="{{ url_for('login') }}" method="post">
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="username" required>
+    <br>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <br>
+    <button type="submit">Login</button>
+</form>
+
+<script>
+document.getElementById('login-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var form = this;
+    var formData = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: formData
+    }).then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              Swal.fire({
+                  icon: 'success',
+                  title: 'Success',
+                  text: 'Login successful.'
+              }).then(() => {
+                  window.location.href = "{{ url_for('index') }}";
+              });
+          } else {
+              Swal.fire({
+                  icon: 'error',
+                  title: 'Error',
+                  text: data.message
+              });
+          }
+      }).catch(error => {
+          Swal.fire({
+              icon: 'error',
+              title: 'Error',
+              text: 'An error occurred: ' + error
+          });
+      });
+});
+</script>
+{% endblock %}

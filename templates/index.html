@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<h1>Welcome, {{ session['username'] }}!</h1>
+<h2>Your Files</h2>
+<ul>
+    {% for file in files %}
+    <li>
+        {% if file.endswith('.mp4') %}
+        <video width="320" height="240" controls>
+            <source src="{{ url_for('download', filename=file) }}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        {% elif file.endswith(('.png', '.jpg', '.jpeg', '.gif')) %}
+        <img src="{{ url_for('download', filename=file) }}" alt="{{ file }}" style="max-width: 320px; max-height: 240px;">
+        {% else %}
+        <a href="{{ url_for('download', filename=file) }}">{{ file }}</a>
+        {% endif %}
+        <form class="delete-file-form" action="{{ url_for('delete_file', filename=file) }}" method="post" style="display: inline;">
+            <button type="button" class="delete-file-btn">Delete</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<script>
+document.querySelectorAll('.delete-file-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        var form = this.closest('form');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(form.action, {
+                    method: 'POST'
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Deleted!',
+                              text: 'Your file has been deleted.'
+                          }).then(() => {
+                              window.location.reload();
+                          });
+                      } else {
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Error',
+                              text: 'Failed to delete file.'
+                          });
+                      }
+                  }).catch(error => {
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Error',
+                          text: 'An error occurred: ' + error
+                      });
+                  });
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

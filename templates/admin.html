@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Panel{% endblock %}
+
+{% block content %}
+<h1>Admin Panel</h1>
+<h2>Users</h2>
+<ul id="user-list">
+    {% for username in users %}
+    <li>{{ username }}
+        <form class="delete-user-form" action="{{ url_for('delete_user', username=username) }}" method="post" style="display: inline;">
+            <button type="button" class="delete-user-btn">Delete</button>
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<script>
+$(document).ready(function() {
+    $('.delete-user-btn').on('click', function() {
+        var form = $(this).closest('form');
+        var url = form.attr('action');
+
+        $.ajax({
+            url: url,
+            type: 'POST',
+            success: function(response) {
+                form.closest('li').remove();
+                alert('User deleted successfully.');
+            },
+            error: function(xhr, status, error) {
+                alert('An error occurred: ' + error);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
