@@ -1,0 +1,118 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, rgba(245,11,46,0.8), rgba(14,0,3,0.8));
+}
+
+nav {
+    background-color: #b2a6a6;
+    color: #0f0a0a;
+    padding: 10px 20px;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.container {
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    color: #410202;
+}
+
+form {
+    margin-top: 20px;
+}
+
+form p {
+    margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="password"],
+form input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form input[type="submit"],
+button {
+    background-color: #333;
+    color: #a90a0a;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover,
+button:hover {
+    background-color: #555;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 10px;
+    background-color: rgba(77, 2, 2, 0.9); /* 半透明白色背景 */
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
+    transition: background-color 0.3s ease; /* 平滑过渡效果 */
+}
+
+ul li:hover {
+    background-color: rgb(211, 100, 100); /* 悬停时背景颜色变亮 */
+}
+
+ul li a {
+    text-decoration: none;
+    color: #410202; /* 确保文字颜色与背景形成良好对比 */
+    font-weight: 500; /* 加粗文字 */
+}
+
+ul li a:hover {
+    text-decoration: underline;
+}
+
+form input[type="submit"],
+button {
+    background-color: #403f3f;
+    color: #e60a0a;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover,
+button:hover {
+    background-color: rgb(180, 169, 169); /* 悬停时背景颜色变亮 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
+    transition: background-color 0.3s ease; /* 平滑过渡效果 */
+}

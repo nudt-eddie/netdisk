@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>{{ post.title }}</h1>
+    <p class="text-muted">Posted by {{ post.author }} on {{ post.timestamp }}</p>
+    <div class="card mb-4">
+        <div class="card-body">
+            {{ post.content }}
+        </div>
+    </div>
+
+    {% if post.image %}
+    <div class="mb-4">
+        <img src="{{ url_for('static', filename='uploads/' + post.image) }}" alt="Post image" class="img-fluid">
+    </div>
+    {% endif %}
+
+    <h2>Comments</h2>
+    {% if post.comments %}
+        {% for comment in post.comments %}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <p>{{ comment.content }}</p>
+                    <p class="text-muted">Commented by {{ comment.author }} on {{ comment.timestamp }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No comments yet.</p>
+    {% endif %}
+
+    {% if session.username %}
+        <h3>Add a Comment</h3>
+        <form action="{{ url_for('add_comment', post_id=post.id) }}" method="post">
+            <div class="form-group">
+                <textarea class="form-control" name="content" rows="3" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Comment</button>
+        </form>
+    {% else %}
+        <p>Please <a href="{{ url_for('login') }}">login</a> to add a comment.</p>
+    {% endif %}
+</div>
+{% endblock %}

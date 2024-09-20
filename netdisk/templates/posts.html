@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">Community Posts</h1>
+    {% for post in posts %}
+    <div class="card mb-5 shadow-sm">
+        <div class="card-body">
+            <h2 class="card-title">{{ post.title }}</h2>
+            <p class="text-muted"><i class="fas fa-user"></i> {{ post.author }} | <i class="fas fa-calendar-alt"></i> {{ post.timestamp }}</p>
+            <p class="card-text">{{ post.content }}</p>
+            {% if post.image %}
+            <div class="mb-3">
+                <img src="{{ url_for('static', filename='uploads/' + post.image) }}" alt="Post image" class="img-fluid rounded">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <h3 class="mb-3"><i class="fas fa-comments"></i> Comments</h3>
+        {% if post.comments %}
+            {% for comment in post.comments %}
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <p class="card-text">{{ comment.content }}</p>
+                        <p class="text-muted small"><i class="fas fa-user"></i> {{ comment.author }} | <i class="fas fa-clock"></i> {{ comment.timestamp }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p class="text-muted">No comments yet. Be the first to comment!</p>
+        {% endif %}
+    </div>
+
+    <div class="mb-5">
+        <h4 class="mb-3"><i class="fas fa-plus-circle"></i> Add a Comment</h4>
+        <form action="{{ url_for('add_comment', post_id=post.id) }}" method="post">
+            <div class="form-group">
+                <textarea class="form-control" name="content" rows="3" required placeholder="Write your comment here..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary mt-2"><i class="fas fa-paper-plane"></i> Submit Comment</button>
+        </form>
+    </div>
+    <hr class="mb-5">
+    {% endfor %}
+</div>
+{% endblock %}
